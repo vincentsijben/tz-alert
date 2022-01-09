@@ -1,12 +1,33 @@
 # tezos-alert
-Simple quick'n'dirty node app to send notification when account balance changes.
-
+Simple quick'n'dirty node app to send discord notification when account balance changes.
 
 # Install
 * run `npm install` inside working directory
-* create a copy from .env.example, rename it to .env and fill in the blanks!
-* run the program with `node ./index.js` 
-* keep it running while your account balance changes to see it in action
+* create a copy of `config.json.example` and rename it to `config.json`.
+* `discord_token`: copy and paste the Discord token (see Discord setup below)
+* `discord_userID`: go to a channel and right-click on your name on the right and choose `copy ID`
+* `discord_prefix`: pick a prefix that does not exist in your current Discord server
+* `tezos_address`: your tezos address you want to get notifications for
+* run the program with `node ./src/index.js` 
+* keep it running while your account balance changes to see it in action or host it on a live server
 
-# Todo
-* wrap this in electron app so everyone can run this locally easily
+# Discord Setup
+```
+Go to https://discord.com/developers/applications
+Click New Application
+Give it a name like "Tezos account balance"
+Give it a description
+Upload an app icon
+In the menu section go to Bot to add a Bot user
+Click Add Bot
+Copy the token and paste it in config.json into the `discord_token` value
+Go to the BOT menu and enable both "Privileged Gateway Intents" intents.
+In the menu section go to OAuth2 - URL Generator
+In the scopes section choose "bot"
+In the bot permissions section choose "Send Messages"
+---
+Copy the URL in the "generated url" section, paste it in your browser, pick the correct server the bot needs to be added to.
+```
+
+### Todo
+* // https://baking-bad.org/blog/2020/07/29/tezos-explorer-api-tzkt-how-often-to-make-requests/#how-often-do-i-need-to-make-api-requests
