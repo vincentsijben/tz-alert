@@ -1,7 +1,7 @@
-# tezos-alert
-<img src="assets/tezos.png" alt="Tezos icon"><br>
-Simple Node app to send a Discord notification when your Tezos account balance changes.
-<img src="assets/screenshot.png" alt="screenshot from Discord bot message"><br><br>
+# <img src="assets/tezos.png" alt="Tezos icon" width="50"> tezos-alert 
+
+A NodeJS application which uses https://api.tzkt.io/ to check for changes in a Tezos account and notify these changes by direct-messaging you on Discord.<br>
+<img src="assets/screenshot.png" alt="screenshot from Discord bot message" width="400">
 
 # Usage
 When the Discord bot is added to your server, whenever your Tezos account balance changes (checked every minute due to API limits), you'll receive a DM from your bot.
