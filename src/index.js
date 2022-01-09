@@ -22,10 +22,11 @@ client.on('ready', () => {
 
 client.on("messageCreate", async message => {
 
-    if (message.author.bot) return;
+    if (message.author.bot) return; //don't want the bot to inception it's own messages
 
-    if (!message.content.startsWith(prefix)) return;
+    if (!message.content.startsWith(prefix)) return; //don't do anything without the set prefix
 
+    //change Tezos address
     if (message.content.startsWith(`${prefix}tzaddress`)) {
 
         const args = message.content.substring(prefix.length).split(/ +/);
@@ -35,7 +36,7 @@ client.on("messageCreate", async message => {
         const result = await response.json();
         if (result?.errors?.address) return message.reply(`${result.errors.address} Still using https://tzkt.io/${tzAddress}/`);
         tzAddress = args[1];
-        
+
         //set new Balance:
         const responseBalance = await fetch(`https://api.tzkt.io/v1/accounts/${tzAddress}/balance`);
         const balance = await responseBalance.json();
@@ -48,11 +49,17 @@ Your current balance is: ${balance / 1e6} ꜩ`);
 
     }
 
+    //change Discord user ID
     if (message.content.startsWith(`${prefix}userid`)) {
         const args = message.content.substring(prefix.length).split(/ +/);
         if (args.length < 2) return message.reply(`${prefix}${args[0]} is not a valid command. Usage: !userid your-discord-user-id`);
-        userID = args[1];
-        message.reply(`Discord userID set to: ${userID}`)
+
+        client.users.fetch(args[1], false).then((user) => {
+            userID = args[1];
+            message.reply(`Discord userID set to: ${userID}`)
+        }).catch(err => {
+            message.reply(`The userID ${args[1]} is not valid`)
+        });
     }
 
     if (message.content === `${prefix}balance`) {
