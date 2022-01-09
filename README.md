@@ -6,7 +6,7 @@ When the Discord bot is added to your server, whenever your Tezos account balanc
 But you can also send your Bot a DM:
 * Get your current Tezos address balance: `!balance`
 * Change the Discord User ID (only for testing purposes): `!userid your-user-id`
-* Change the Tezos address (only for testing purposes): `tzaddress your-tezos-address`
+* Change the Tezos address (only for testing purposes): `!tzaddress your-tezos-address`
 
 # Install
 * run `npm install` inside working directory
