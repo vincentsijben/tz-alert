@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const discord = require('discord.js');
-const config = require('./config.json');
+const config = require('../config/config.json');
 const client = new discord.Client({
     intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"], 
     partials: ["CHANNEL"] //also needed for bot responding to DM's
