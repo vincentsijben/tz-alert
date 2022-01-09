@@ -1,6 +1,12 @@
 # tezos-alert
 Simple quick'n'dirty node app to send discord notification when account balance changes.
 
+# Usage
+When the Discord bot is added to your server, you can do:
+* Get your current Tezos address balance: `!balance`
+* Change the Discord User ID: `!userid your-user-id`
+* Change the Tezos address: `tzaddress your-tezos-address`
+
 # Install
 * run `npm install` inside working directory
 * create a copy of `config.json.example` and rename it to `config.json`.
@@ -29,5 +35,5 @@ In the bot permissions section choose "Send Messages"
 Copy the URL in the "generated url" section, paste it in your browser, pick the correct server the bot needs to be added to.
 ```
 
-### Todo
-* // https://baking-bad.org/blog/2020/07/29/tezos-explorer-api-tzkt-how-often-to-make-requests/#how-often-do-i-need-to-make-api-requests
+### Read
+* Best practices: https://baking-bad.org/blog/2020/09/28/tezos-explorer-api-tzkt-filter-data-on-the-api/

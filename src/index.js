@@ -2,40 +2,66 @@ const fetch = require('node-fetch');
 const discord = require('discord.js');
 const config = require('../config/config.json');
 const client = new discord.Client({
-    intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"], 
+    intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"],
     partials: ["CHANNEL"] //also needed for bot responding to DM's
 });
+
 let userID = config.discord_userID;
 let tzAddress = config.tezos_address
 let prefix = config.discord_prefix
+
+let localHead = null;
+let lastBalance = null;
+let nextBlockTime = Date.now()
 
 client.on('ready', () => {
     console.log(client.user.tag + " has logged in.");
 });
 
 
+
 client.on("messageCreate", async message => {
-    
+
+    if (message.author.bot) return;
+
     if (!message.content.startsWith(prefix)) return;
 
     if (message.content.startsWith(`${prefix}tzaddress`)) {
+
         const args = message.content.substring(prefix.length).split(/ +/);
-        if (args.length < 2) { message.reply(`${prefix}${args[0]} is not a valid command!`) }
+        if (args.length < 2) return message.reply(`${prefix}${args[0]} is not a valid command. Usage: !tzaddress your-tz-address`);
+
+        const response = await fetch(`https://api.tzkt.io/v1/accounts/${args[1]}`);
+        const result = await response.json();
+        if (result?.errors?.address) return message.reply(`${result.errors.address} Still using https://tzkt.io/${tzAddress}/`);
         tzAddress = args[1];
-        message.reply(`Tezos address set to: https://tzkt.io/${tzAddress}/operations/`)
+        
+        //set new Balance:
+        const responseBalance = await fetch(`https://api.tzkt.io/v1/accounts/${tzAddress}/balance`);
+        const balance = await responseBalance.json();
+        lastBalance = balance;
+
+        client.users.fetch(userID, false).then((user) => {
+            user.send(`Tezos address https://tzkt.io/${tzAddress}/
+Your current balance is: ${balance / 1e6} ꜩ`);
+        });
+
     }
 
     if (message.content.startsWith(`${prefix}userid`)) {
         const args = message.content.substring(prefix.length).split(/ +/);
-        if (args.length < 2) { message.reply(`${prefix}${args[0]} is not a valid command!`) }
+        if (args.length < 2) return message.reply(`${prefix}${args[0]} is not a valid command. Usage: !userid your-discord-user-id`);
         userID = args[1];
         message.reply(`Discord userID set to: ${userID}`)
     }
 
     if (message.content === `${prefix}balance`) {
-        const balance = await getBalance();
+
+        const response = await fetch(`https://api.tzkt.io/v1/accounts/${tzAddress}/balance`);
+        const balance = await response.json();
+
         client.users.fetch(userID, false).then((user) => {
-            user.send(`Tezos address https://tzkt.io/${tzAddress}/operations/
+            user.send(`Tezos address https://tzkt.io/${tzAddress}/
 Your current balance is: ${balance / 1e6} ꜩ`);
         });
     }
@@ -43,8 +69,7 @@ Your current balance is: ${balance / 1e6} ꜩ`);
 
 client.login(config.discord_token);
 
-let localHead = null;
-let nextBlockTime = Date.now()
+
 
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes * 60000);
@@ -64,44 +89,37 @@ async function isNewBlock() {
     return false;
 }
 
-async function getBalance() {
-    const response = await fetch(`https://api.tzkt.io/v1/accounts/${tzAddress}`);
-    const account = await response.json();
-    return account.balance;
-}
-
 async function notifierApp() {
 
-    let lastBalance = -99999;
     setInterval(async function () {
         //  if there was no new block, we don't do anything.
         if (isNewBlock()) {
             // the request will be made no more than once a minute.
-            const response = await fetch(`https://api.tzkt.io/v1/accounts/${tzAddress}`);
-            const account = await response.json();
+            const response = await fetch(`https://api.tzkt.io/v1/accounts/${tzAddress}/balance`);
+            const currentBalance = await response.json();
 
-            if (account.balance != lastBalance) {
+            if (lastBalance == null || currentBalance != lastBalance) {
 
-                let addorextract = (account.balance - lastBalance > 0) ? `⬆️` : `⬇️`;
-                let text = `Tezos address https://tzkt.io/${tzAddress}/operations/\n
-${addorextract}  Balance changed: ${(account.balance - lastBalance) / 1e6} ꜩ
+                let addorextract = (currentBalance - lastBalance > 0) ? `⬆️` : `⬇️`;
+                let text = `Tezos address https://tzkt.io/${tzAddress}/\n
+${addorextract}  Balance changed: ${(currentBalance - lastBalance) / 1e6} ꜩ
 
-Current balance: ${account.balance / 1e6} ꜩ
+Current balance: ${currentBalance / 1e6} ꜩ
 Previous balance: ${lastBalance / 1e6} ꜩ
                 `;
 
-                if (lastBalance != -99999) {
+                if (lastBalance != null) {
                     console.log(text);
                     client.users.fetch(userID, false).then((user) => {
                         user.send(text);
                     });
                 }
 
-                lastBalance = account.balance;
+                lastBalance = currentBalance;
 
             }
         }
-    }, 60000);
+    }, 10000);
 }
 
 notifierApp();
