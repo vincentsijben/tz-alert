@@ -20,8 +20,6 @@
   "homepage": "https://github.com/vincentsijben/tezos-alert#readme",
   "dependencies": {
     "discord.js": "^13.5.1",
-    "dotenv": "^10.0.0",
-    "node-fetch": "^2.6.6",
-    "nodemailer": "^6.7.2"
+    "node-fetch": "^2.6.6"
   }
 }
