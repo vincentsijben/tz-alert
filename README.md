@@ -38,5 +38,51 @@ In the bot permissions section choose "Send Messages"
 Copy the URL in the "generated url" section, paste it in your browser, pick the correct server the bot needs to be added to.
 ```
 
+# install Digital Ocean droplet
+Create a new droplet in the Digital Ocean interface, set up SSH keys and connect to your droplet.
+```
+# create new folder
+mkdir -p /opt/tz-alert
+cd /opt/tz-alert
+# install node:
+sudo apt update
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
+# install pm2 globally
+sudo npm install -g pm2
+sudo apt install -y git-all
+git clone https://github.com/vincentsijben/tz-alert.git
+cd tz-alert
+# install the project dependencies
+npm i
+# create the config file
+cd config
+mv config.json.example config.json
+# copy paste your token
+```
+to start:
+```
+pm2 start /opt/tz-alert/tz-alert/src/index.js --name tz-alert
+# start pm2 after reboot
+pm2 startup
+pm2 save
+# to see logs
+pm2 logs tz-alert
+# check status
+pm2 status tz-alert
+# to remove
+pm2 delete tz-alert
+```
+If there's an update in the code, make sure it's pushed to the online repository and run this on the server:
+```
+cd ~/mia-discord-role-bot
+git stash
+git pull
+pm2 delete mia-discord-bot
+pm2 start ./src/bot.js --name mia-discord-bot
+pm2 save
+```
+
+
 ### Read
 * Best practices: https://baking-bad.org/blog/2020/09/28/tezos-explorer-api-tzkt-filter-data-on-the-api/
