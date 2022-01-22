@@ -48,9 +48,8 @@ sudo apt-get install -y nodejs
 sudo npm install -g pm2
 # sudo apt install -y git-all
 sudo apt install -y git
-cd /opt/
-git clone https://github.com/vincentsijben/tz-alert.git
-cd tz-alert
+git clone https://github.com/vincentsijben/tz-alert.git /opt/
+cd /opt/tz-alert/
 # install the project dependencies
 npm i
 # create the config file
