@@ -75,11 +75,11 @@ pm2 delete tz-alert
 ```
 If there's an update in the code, make sure it's pushed to the online repository and run this on the server:
 ```
-cd ~/mia-discord-role-bot
+cd /opt/tz-alert/tz-alert/
 git stash
 git pull
-pm2 delete mia-discord-bot
-pm2 start ./src/bot.js --name mia-discord-bot
+pm2 delete tz-alert
+pm2 start ./src/index.js --name tz-alert
 pm2 save
 ```
 
