@@ -10,16 +10,6 @@ But you can also send your Bot a DM:
 * Change the Discord User ID (only for testing purposes): `!userid your-user-id`
 * Change the Tezos address (only for testing purposes): `!tzaddress your-tezos-address`
 
-# Install
-* run `npm install` inside working directory
-* create a copy of `config.json.example` and rename it to `config.json`.
-* `discord_token`: copy and paste the Discord token (see Discord setup below)
-* `discord_userID`: copy and paste your Discord User ID (https://techswift.org/2020/04/22/how-to-find-your-user-id-on-discord/)
-* `discord_prefix`: pick a prefix that does not exist in your current Discord server. If you don't have any bots, you can use the default "!".
-* `tezos_address`: the Tezos address you want to get notifications for
-* run the program with `node ./src/index.js` 
-* keep it running while your account balance changes to see it in action or host it on a live server
-
 # Discord Setup
 ```
 Go to https://discord.com/developers/applications
@@ -37,6 +27,18 @@ In the bot permissions section choose "Send Messages"
 ---
 Copy the URL in the "generated url" section, paste it in your browser, pick the correct server the bot needs to be added to.
 ```
+
+# Local install
+* run `npm install` inside working directory
+* create a copy of `config.json.example` and rename it to `config.json`.
+* `discord_token`: copy and paste the Discord token (see Discord setup below)
+* `discord_userID`: copy and paste your Discord User ID (https://techswift.org/2020/04/22/how-to-find-your-user-id-on-discord/)
+* `discord_prefix`: pick a prefix that does not exist in your current Discord server. If you don't have any bots, you can use the default "!".
+* `tezos_address`: the Tezos address you want to get notifications for
+* run the program with `node ./src/index.js` 
+* keep it running while your account balance changes to see it in action or host it on a live server
+
+
 
 # Digital Ocean droplet
 To have your bot 24/7 online, you'll have to put it on an online server. This is an example of using Digital Ocean droplets to quickly deploy your Discord bot online. 

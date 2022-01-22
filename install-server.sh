@@ -19,7 +19,7 @@ npm i
 mv config/config.json.example config/config.json
 echo
 echo "=========================================="
-echo "Now put your own token in the config.json!"
+echo "Now edit the config.json!"
 echo
 echo "You can use: nano config/config.json"
 echo "=========================================="
