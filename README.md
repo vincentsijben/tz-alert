@@ -57,7 +57,7 @@ cd /opt/tz-alert/
 npm i
 # create the config file
 mv config/config.json.example config/config.json
-# copy paste your token
+# copy paste your token with: nano config/config.json
 ```
 to start:
 ```
@@ -87,8 +87,8 @@ Create a new droplet in the Digital Ocean interface, set up SSH keys and connect
 In the next example I assume your droplet IP address will be 165.22.204.24
 ```
 # From your client machine, run:
-scp install.sh root@165.22.204.24:/opt/
-ssh root@165.22.204.24 -t "chmod 771 /opt/install.sh && time /opt/install.sh && sleep 5 && reboot && exit; bash --login"
+scp install-server.sh root@165.22.204.24:/opt/
+ssh root@165.22.204.24 -t "chmod 771 /opt/install-server.sh && time /opt/install-server.sh && exit; bash --login"
 ```
 
 ### Read
