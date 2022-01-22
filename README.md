@@ -44,7 +44,7 @@ Copy the URL in the "generated url" section, paste it in your browser, pick the 
 To have your bot 24/7 online, you'll have to put it on an online server. This is an example of using Digital Ocean droplets to quickly deploy your Discord bot online. 
 
 ## Manually install:
-Check the `install-server.sh` and run the commands one by one. It includes comments so you'll know what each command will do.
+Check `install-server.sh` inside this repo and run the commands one by one. It includes some comments so you'll know what each command will do.
 
 ## Script install:
 Create a new droplet in the Digital Ocean interface, set up SSH keys, connect to your droplet and exit the droplet.
@@ -55,7 +55,7 @@ ssh root@128.199.41.186 -t "chmod 771 /opt/install-server.sh && time /opt/instal
 ```
 
 ## Start the bot
-If you've added your Discord token to the `config.json` you can start the bot on the server with:
+If you've edited the `config.json` you can start the bot on the server with:
 ```
 pm2 start /opt/tz-alert/src/index.js --name tz-alert
 # start pm2 after reboot
