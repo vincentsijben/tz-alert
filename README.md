@@ -41,27 +41,25 @@ Copy the URL in the "generated url" section, paste it in your browser, pick the 
 # install Digital Ocean droplet
 Create a new droplet in the Digital Ocean interface, set up SSH keys and connect to your droplet.
 ```
-# create new folder
-mkdir -p /opt/tz-alert
-cd /opt/tz-alert
 # install node, it will run run apt-get update automatically:
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
 sudo apt-get install -y nodejs
 # install pm2 globally
 sudo npm install -g pm2
-sudo apt install -y git-all
+# sudo apt install -y git-all
+sudo apt install -y git
+cd /opt/
 git clone https://github.com/vincentsijben/tz-alert.git
 cd tz-alert
 # install the project dependencies
 npm i
 # create the config file
-cd config
-mv config.json.example config.json
+mv config/config.json.example config/config.json
 # copy paste your token
 ```
 to start:
 ```
-pm2 start /opt/tz-alert/tz-alert/src/index.js --name tz-alert
+pm2 start /opt/tz-alert/src/index.js --name tz-alert
 # start pm2 after reboot
 pm2 startup
 pm2 save
@@ -74,11 +72,11 @@ pm2 delete tz-alert
 ```
 If there's an update in the code, make sure it's pushed to the online repository and run this on the server:
 ```
-cd /opt/tz-alert/tz-alert/
+cd /opt/tz-alert/
 git stash
 git pull
 pm2 delete tz-alert
-pm2 start ./src/index.js --name tz-alert
+pm2 start /opt/tz-alert/src/index.js --name tz-alert
 pm2 save
 ```
 
