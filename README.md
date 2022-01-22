@@ -41,25 +41,19 @@ Copy the URL in the "generated url" section, paste it in your browser, pick the 
 # Digital Ocean droplet
 To have your bot 24/7 online, you'll have to put it on an online server. This is an example of using Digital Ocean droplets to quickly deploy your Discord bot online. 
 
-## Manually install it:
-Create a new droplet in the Digital Ocean interface, set up SSH keys and connect to your droplet.
+## Manually install:
+Check the `install-server.sh` and run the commands one by one. It includes comments so you'll know what each command will do.
+
+## Script install:
+Create a new droplet in the Digital Ocean interface, set up SSH keys, connect to your droplet and exit the droplet.
+In the next example I assume your droplet IP address will be 128.199.41.186. Run the commands from your local machine inside the repository folder.
 ```
-# install node, it will run run apt-get update automatically:
-curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-sudo apt -qq install -y nodejs
-# install pm2 globally
-sudo npm install -g pm2
-# sudo apt install -y git-all
-sudo apt install -y git
-git clone https://github.com/vincentsijben/tz-alert.git /opt/tz-alert/
-cd /opt/tz-alert/
-# install the project dependencies
-npm i
-# create the config file
-mv config/config.json.example config/config.json
-# copy paste your token with: nano config/config.json
+scp install-server.sh root@128.199.41.186:/opt/
+ssh root@128.199.41.186 -t "chmod 771 /opt/install-server.sh && time /opt/install-server.sh && exit; bash --login"
 ```
-to start:
+
+## Start the bot
+If you've added your Discord token to the `config.json` you can start the bot on the server with:
 ```
 pm2 start /opt/tz-alert/src/index.js --name tz-alert
 # start pm2 after reboot
@@ -72,6 +66,7 @@ pm2 status tz-alert
 # to remove
 pm2 delete tz-alert
 ```
+
 If there's an update in the code, make sure it's pushed to the online repository and run this on the server:
 ```
 cd /opt/tz-alert/
@@ -82,14 +77,7 @@ pm2 start /opt/tz-alert/src/index.js --name tz-alert
 pm2 save
 ```
 
-## Automatically install with script
-Create a new droplet in the Digital Ocean interface, set up SSH keys and connect to your droplet.
-In the next example I assume your droplet IP address will be 128.199.41.186
-```
-# From your client machine, run:
-scp install-server.sh root@128.199.41.186:/opt/
-ssh root@128.199.41.186 -t "chmod 771 /opt/install-server.sh && time /opt/install-server.sh && exit; bash --login"
-```
+
 
 ### Read
 * Best practices: https://baking-bad.org/blog/2020/09/28/tezos-explorer-api-tzkt-filter-data-on-the-api/
