@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/vincentsijben/tz-alert#readme",
   "dependencies": {
-    "discord.js": "^13.5.1",
-    "node-fetch": "^2.6.6"
+    "discord.js": "^13.6.0",
+    "node-fetch": "^3.2.0"
   }
 }
