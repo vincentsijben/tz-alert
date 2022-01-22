@@ -38,17 +38,20 @@ In the bot permissions section choose "Send Messages"
 Copy the URL in the "generated url" section, paste it in your browser, pick the correct server the bot needs to be added to.
 ```
 
-# install Digital Ocean droplet
+# Digital Ocean droplet
+To have your bot 24/7 online, you'll have to put it on an online server. This is an example of using Digital Ocean droplets to quickly deploy your Discord bot online. 
+
+## Manually install it:
 Create a new droplet in the Digital Ocean interface, set up SSH keys and connect to your droplet.
 ```
 # install node, it will run run apt-get update automatically:
 curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-sudo apt-get install -y nodejs
+sudo apt -qq install -y nodejs
 # install pm2 globally
 sudo npm install -g pm2
 # sudo apt install -y git-all
 sudo apt install -y git
-git clone https://github.com/vincentsijben/tz-alert.git /opt/
+git clone https://github.com/vincentsijben/tz-alert.git /opt/tz-alert/
 cd /opt/tz-alert/
 # install the project dependencies
 npm i
@@ -79,6 +82,14 @@ pm2 start /opt/tz-alert/src/index.js --name tz-alert
 pm2 save
 ```
 
+## Automatically install with script
+Create a new droplet in the Digital Ocean interface, set up SSH keys and connect to your droplet.
+In the next example I assume your droplet IP address will be 165.22.204.24
+```
+# From your client machine, run:
+scp install.sh root@165.22.204.24:/opt/
+ssh root@165.22.204.24 -t "chmod 771 /opt/install.sh && time /opt/install.sh && sleep 5 && reboot && exit; bash --login"
+```
 
 ### Read
 * Best practices: https://baking-bad.org/blog/2020/09/28/tezos-explorer-api-tzkt-filter-data-on-the-api/
