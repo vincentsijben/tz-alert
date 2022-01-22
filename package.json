@@ -18,8 +18,9 @@
     "url": "https://github.com/vincentsijben/tz-alert/issues"
   },
   "homepage": "https://github.com/vincentsijben/tz-alert#readme",
+  "comment":"node-fetch needs to be version 2 because ES module is not supported for discord.js",
   "dependencies": {
     "discord.js": "^13.6.0",
-    "node-fetch": "^3.2.0"
+    "node-fetch": "^2.6.7"
   }
 }
