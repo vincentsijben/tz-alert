@@ -44,8 +44,7 @@ Create a new droplet in the Digital Ocean interface, set up SSH keys and connect
 # create new folder
 mkdir -p /opt/tz-alert
 cd /opt/tz-alert
-# install node:
-sudo apt update
+# install node, it will run run apt-get update automatically:
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install -y nodejs
 # install pm2 globally
