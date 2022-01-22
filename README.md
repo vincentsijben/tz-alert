@@ -84,11 +84,11 @@ pm2 save
 
 ## Automatically install with script
 Create a new droplet in the Digital Ocean interface, set up SSH keys and connect to your droplet.
-In the next example I assume your droplet IP address will be 165.22.204.24
+In the next example I assume your droplet IP address will be 128.199.41.186
 ```
 # From your client machine, run:
-scp install-server.sh root@165.22.204.24:/opt/
-ssh root@165.22.204.24 -t "chmod 771 /opt/install-server.sh && time /opt/install-server.sh && exit; bash --login"
+scp install-server.sh root@128.199.41.186:/opt/
+ssh root@128.199.41.186 -t "chmod 771 /opt/install-server.sh && time /opt/install-server.sh && exit; bash --login"
 ```
 
 ### Read
